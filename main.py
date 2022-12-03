@@ -66,21 +66,23 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
          
         # label of frame Layout 2
-        label = ttk.Label(self, text ="Page1", font = LARGEFONT)
+        label = ttk.Label(self, text ="BandManager", font = LARGEFONT)
          
         # putting the grid in its place by using
         # grid
         label.grid(row = 0, column = 4, padx = 10, pady = 10)
   
-        button1 = ttk.Button(self, text ="Page 1",
+        manageDataBtn = ttk.Button(self, text ="Manage Data",
         command = lambda : controller.show_frame(Page1))
      
         # putting the button in its place by
         # using grid
-        button1.grid(row = 1, column = 1, padx = 10, pady = 10)
+        manageDataBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
+        exitBtn = ttk.Button(self, text ="Exit",
+            command = lambda : exit())
   
         ## button to show frame 2 with text layout2
-        button2 = ttk.Button(self, text ="Page 2",
+        bandStatsBtn = ttk.Button(self, text ="Band Stats",
         command = lambda : controller.show_frame(Page2))
         # show image 
         logoRaw=Image.open('bandlogo-02.png')
@@ -95,7 +97,9 @@ class StartPage(tk.Frame):
 
         # putting the button in its place by
         # using grid
-        button2.grid(row = 2, column = 1, padx = 10, pady = 10)
+        bandStatsBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
+        exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
+
   
           
   
@@ -108,27 +112,25 @@ class Page1(tk.Frame):
         tk.Frame.__init__(self, parent)
         
         label = ttk.Label(self, text ="MANAGE DATA", font = LARGEFONT)
-        label.grid(row = 0, column = 4, padx = 10, pady = 10)
   
         # button to show frame 2 with text
         # layout2
-        button1 = ttk.Button(self, text ="StartPage",
+        homeBtn = ttk.Button(self, text ="Home",
                             command = lambda : controller.show_frame(StartPage))
      
-        # putting the button in its place
-        # by using grid
-        # self.create_image(5, 5, image=logo, anchor=NW)
-
-        button1.grid(row = 1, column = 1, padx = 10, pady = 10)
   
-        # button to show frame 2 with text
-        # layout2
-        button2 = ttk.Button(self, text ="Page 2",
+        bandStatsBtn = ttk.Button(self, text ="Band Stats",
                             command = lambda : controller.show_frame(Page2))
+                            
      
-        # putting the button in its place by
-        # using grid
-        button2.grid(row = 2, column = 1, padx = 10, pady = 10)
+        exitBtn = ttk.Button(self, text ="Exit",
+            command = lambda : exit())
+
+
+        label.grid(row = 0, column = 4, padx = 10, pady = 10)
+        homeBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
+        bandStatsBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
+        exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
   
   
   
@@ -137,26 +139,25 @@ class Page1(tk.Frame):
 class Page2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text ="Page 2", font = LARGEFONT)
+        label = ttk.Label(self, text ="Stats", font = LARGEFONT)
         label.grid(row = 0, column = 4, padx = 10, pady = 10)
   
         # button to show frame 2 with text
         # layout2
-        button1 = ttk.Button(self, text ="Page 1",
+        manageDataBtn = ttk.Button(self, text ="Manage Data",
                             command = lambda : controller.show_frame(Page1))
      
-        # putting the button in its place by
-        # using grid
-        button1.grid(row = 1, column = 1, padx = 10, pady = 10)
-  
         # button to show frame 3 with text
         # layout3
-        button2 = ttk.Button(self, text ="Startpage",
+        homeBtn = ttk.Button(self, text ="Home",
                             command = lambda : controller.show_frame(StartPage))
-     
+        exitBtn = ttk.Button(self, text ="Exit",
+            command = lambda : exit())
         # putting the button in its place by
         # using grid
-        button2.grid(row = 2, column = 1, padx = 10, pady = 10)
+        manageDataBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
+        homeBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
+        exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
   
   
 # Driver Code
