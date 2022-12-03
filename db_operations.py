@@ -43,9 +43,9 @@ def create_tables(mycursor):
         song_name VARCHAR(50),
         artist_name VARCHAR(50),
         release_id INT,
-        PRIMARY KEY (song_id))
+        PRIMARY KEY (song_id),
+        FOREIGN KEY (release_id) REFERENCES releases(release_id))
     ''')
-    #FOREIGN KEY (release_id) REFERENCES release(release_id)
     mycursor.execute('''
     CREATE TABLE IF NOT EXISTS setList (
         setList_id INT NOT NULL AUTO_INCREMENT,
@@ -69,6 +69,7 @@ def create_tables(mycursor):
 # other bands on bill  "set must be chosen from a list of permitted values"
 # merch SET(merch_id),
 # I'll work on this later
+#TODO: add gig_id as a foreign key to setlist
 
 
 mydb = make_connection()
