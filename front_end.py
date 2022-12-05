@@ -26,6 +26,11 @@ class tkinterApp(tk.Tk):
         # resizeLogo=logoRaw.resize((100,100),Image.ANTIALIAS)
         # logo=ImageTk.PhotoImage(resizeLogo)
         # show image 
+
+
+       
+
+
        
         
         # creating a container
@@ -66,6 +71,11 @@ class tkinterApp(tk.Tk):
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+       
+        # make menu bar appear at top of window
+
+
+
          
         # label of frame Layout 2
         testLabel=Label(self, bg="white",fg="black",text="Band Manager",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
@@ -87,13 +97,24 @@ class StartPage(tk.Frame):
         bandStatsBtn = ttk.Button(self, text ="Band Stats",
         command = lambda : controller.show_frame(Page2))
         # show image 
-        logoRaw=Image.open('bandlogo-02.png')
-        resizeLogo=logoRaw.resize((100,100),Image.ANTIALIAS)
-        logo=ImageTk.PhotoImage(resizeLogo)
+
+
+        # logoRaw=Image.open('bandlogo-02.png')
+        # resizeLogo=logoRaw.resize((100,100),Image.ANTIALIAS)
+        # logo=ImageTk.PhotoImage(resizeLogo)
         # show image
-        label = Label(self, image=logo)
-        label.image = logo
-        label.grid(row = 1, column = 4, padx = 10, pady = 10)
+        # label = Label(self, image=logo)
+        # label.image = logo
+        # label.grid(row = 1, column = 4, padx = 10, pady = 10)
+
+        listbox = Listbox(self, height = 5, width = 20,)  
+   
+        listbox.insert(1,"12/10 @ warehouse OC")  
+        listbox.insert(2, "1/13 @ Record Parlor")  
+        listbox.insert(3, "2/10 @ The Observatory")
+        
+        # make listbox an in-line element with other items in row 1
+        listbox.grid(row = 1, column = 4, padx = 10, pady = 10)
         
 
 
@@ -113,6 +134,8 @@ class Page1(tk.Frame):
          
         tk.Frame.__init__(self, parent)
         
+        
+                
         # label = ttk.Label(self, text ="MANAGE DATA", font = LARGEFONT)
   
         # button to show frame 2 with text
