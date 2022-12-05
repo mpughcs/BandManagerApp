@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import *
 from PIL import ImageTk, Image
+from tkinter.font import Font
 
 
 import tkinter as tk
@@ -8,6 +9,7 @@ from tkinter import ttk
   
  
 LARGEFONT =("Verdana", 35)
+headerFont=("Ariel", 35)
 PAGE_1_NAME = "Start Menu"
 PAGE_2_NAME = "Manage Data"
 PAGE_3_NAME = "S 3"
@@ -66,11 +68,11 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
          
         # label of frame Layout 2
-        label = ttk.Label(self, text ="BandManager", font = LARGEFONT)
+        testLabel=Label(self, bg="white",fg="black",text="Band Manager",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
+
          
         # putting the grid in its place by using
         # grid
-        label.grid(row = 0, column = 4, padx = 10, pady = 10)
   
         manageDataBtn = ttk.Button(self, text ="Manage Data",
         command = lambda : controller.show_frame(Page1))
@@ -111,7 +113,7 @@ class Page1(tk.Frame):
          
         tk.Frame.__init__(self, parent)
         
-        label = ttk.Label(self, text ="MANAGE DATA", font = LARGEFONT)
+        # label = ttk.Label(self, text ="MANAGE DATA", font = LARGEFONT)
   
         # button to show frame 2 with text
         # layout2
@@ -127,7 +129,8 @@ class Page1(tk.Frame):
             command = lambda : exit())
 
 
-        label.grid(row = 0, column = 4, padx = 10, pady = 10)
+        testLabel=Label(self, bg="white",fg="black",text="Manage Data",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
+
         homeBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
         bandStatsBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
         exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
@@ -139,9 +142,8 @@ class Page1(tk.Frame):
 class Page2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text ="Stats", font = LARGEFONT)
-        label.grid(row = 0, column = 4, padx = 10, pady = 10)
-  
+        testLabel=Label(self, bg="white",fg="black",text="Stats",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
+
         # button to show frame 2 with text
         # layout2
         manageDataBtn = ttk.Button(self, text ="Manage Data",
