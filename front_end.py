@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter import *
 from PIL import ImageTk, Image
 from tkinter.font import Font
 
@@ -13,8 +12,9 @@ headerFont=("Ariel", 35)
 PAGE_1_NAME = "Start Menu"
 PAGE_2_NAME = "Manage Data"
 PAGE_3_NAME = "S 3"
+logoRaw=Image.open('bandlogo-02.png')
 
-  
+
 class tkinterApp(tk.Tk):
      
     # __init__ function for class tkinterApp
@@ -26,17 +26,11 @@ class tkinterApp(tk.Tk):
         # resizeLogo=logoRaw.resize((100,100),Image.ANTIALIAS)
         # logo=ImageTk.PhotoImage(resizeLogo)
         # show image 
-
-
-       
-
-
-       
         
         # creating a container
         container = tk.Frame(self) 
         container.pack(side = "top", fill = "both", expand = True)
-  
+
         container.grid_rowconfigure(0, weight = 1)
         container.grid_columnconfigure(0, weight = 1)
         # make window larger
@@ -45,10 +39,12 @@ class tkinterApp(tk.Tk):
         # initializing frames to an empty array
         self.frames = {} 
         
+        # make winodw non resizable
+        self.resizable(0,0)
         # iterating through a tuple consisting
         # of the different page layouts
+
         for F in (StartPage, Page1, Page2):
-  
             frame = F(container, self)
   
             # initializing frame of that object from
@@ -67,7 +63,9 @@ class tkinterApp(tk.Tk):
         frame.tkraise()
   
 # first window frame startpage
-  
+
+
+# BAND MANAGER PAGE############################################################################################################
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -76,11 +74,11 @@ class StartPage(tk.Frame):
 
 
 
-         
+        
         # label of frame Layout 2
         testLabel=Label(self, bg="white",fg="black",text="Band Manager",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
 
-         
+        
         # putting the grid in its place by using
         # grid
   
@@ -100,13 +98,12 @@ class StartPage(tk.Frame):
 
 
         # logoRaw=Image.open('bandlogo-02.png')
-        # resizeLogo=logoRaw.resize((100,100),Image.ANTIALIAS)
-        # logo=ImageTk.PhotoImage(resizeLogo)
+        resizeLogo=logoRaw.resize((75,75),Image.ANTIALIAS)
+        logo=ImageTk.PhotoImage(resizeLogo)
         # show image
-        # label = Label(self, image=logo)
-        # label.image = logo
-        # label.grid(row = 1, column = 4, padx = 10, pady = 10)
-
+        label = Label(self, image=logo)
+        label.image = logo
+        label.place(x=50, y=50,anchor= CENTER)
         listbox = Listbox(self, height = 5, width = 20,)  
    
         listbox.insert(1,"12/10 @ warehouse OC")  
@@ -120,53 +117,80 @@ class StartPage(tk.Frame):
 
         # putting the button in its place by
         # using grid
-        bandStatsBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
-        exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
+        # bandStatsBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
+        exitBtn.place(x=50, y=450,anchor= CENTER)
+        bandStatsBtn.place(x=55, y=400,anchor= CENTER)
+
 
   
           
   
   
-# second window frame page1
+#MANAGE DATA PAGE############################################################################################################
 class Page1(tk.Frame):
      
     def __init__(self, parent, controller):
          
         tk.Frame.__init__(self, parent)
-        
-        
-                
-        # label = ttk.Label(self, text ="MANAGE DATA", font = LARGEFONT)
-  
-        # button to show frame 2 with text
-        # layout2
+        testLabel=Label(self, bg="white",fg="black",text="Manage Data",font=headerFont).place(x=250, y=50, anchor=CENTER)
+
+    
         homeBtn = ttk.Button(self, text ="Home",
                             command = lambda : controller.show_frame(StartPage))
      
-  
         bandStatsBtn = ttk.Button(self, text ="Band Stats",
                             command = lambda : controller.show_frame(Page2))
                             
-     
         exitBtn = ttk.Button(self, text ="Exit",
             command = lambda : exit())
+        
+        addShowBtn = ttk.Button(self, text ="Add Show",
+                            command = lambda : controller.show_frame(Page1))
+        addShowBtn.place(x=250, y=125,anchor= CENTER)
+
+        addReleaseBtn = ttk.Button(self, text ="Add Release",command = lambda : controller.show_frame(Page1))
+        addReleaseBtn.place(x=250, y=175,anchor= CENTER)
+
+        addMerchBtn= ttk.Button(self, text ="Add Merch",command = lambda : controller.show_frame(Page1))
+        addMerchBtn.place(x=250, y=225,anchor= CENTER)
+
+        createSetListBtn= ttk.Button(self, text ="Create Set List",command = lambda : controller.show_frame(Page1))
+        createSetListBtn.place(x=250, y=275,anchor= CENTER)
+
+        createVenueBtn= ttk.Button(self, text ="Create Venue",command = lambda : controller.show_frame(Page1))
+        createVenueBtn.place(x=250, y=325,anchor= CENTER)
 
 
-        testLabel=Label(self, bg="white",fg="black",text="Manage Data",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
+        
 
-        homeBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
-        bandStatsBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
-        exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
+        resizeLogo=logoRaw.resize((75,75),Image.ANTIALIAS)
+        logo=ImageTk.PhotoImage(resizeLogo)
+        # show image
+        label = Label(self, image=logo)
+        label.image = logo
+        label.place(x=50, y=50,anchor= CENTER)
+
+        
+
+        homeBtn.place(x=50,y=125,anchor= CENTER)
+        bandStatsBtn.place(x=55, y=400,anchor= CENTER)
+        exitBtn.place(x=50, y=450,anchor= CENTER)
+
+
   
   
   
-  
-# third window frame page2
+# STATS PAGE############################################################################################################
 class Page2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        testLabel=Label(self, bg="white",fg="black",text="Stats",font=headerFont).grid(row = 0, column = 4, padx = 10, pady = 10)
-
+        testLabel=Label(self, bg="white",fg="black",text="Stats",font=headerFont).place(x=250, y=50, anchor=CENTER)
+        resizeLogo=logoRaw.resize((75,75),Image.ANTIALIAS)
+        logo=ImageTk.PhotoImage(resizeLogo)
+        # show image
+        label = Label(self, image=logo)
+        label.image = logo
+        label.place(x=50, y=50,anchor= CENTER)
         # button to show frame 2 with text
         # layout2
         manageDataBtn = ttk.Button(self, text ="Manage Data",
@@ -174,15 +198,27 @@ class Page2(tk.Frame):
      
         # button to show frame 3 with text
         # layout3
+        earningsBtn = ttk.Button(self, text ="Earnings",
+                            command = lambda : controller.show_frame(Page2))
+                            
         homeBtn = ttk.Button(self, text ="Home",
                             command = lambda : controller.show_frame(StartPage))
         exitBtn = ttk.Button(self, text ="Exit",
             command = lambda : exit())
+        generateReportBtn = ttk.Button(self, text ="Generate Report",
+                            command = lambda : controller.show_frame(Page2))
+        
         # putting the button in its place by
         # using grid
-        manageDataBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
-        homeBtn.grid(row = 2, column = 1, padx = 10, pady = 10)
-        exitBtn.grid(row = 12, column = 1, padx = 10, pady = 200)
+        manageDataBtn.place(x=60, y=400,anchor= CENTER)
+
+        homeBtn.place(x=50,y=125,anchor= CENTER)
+
+        exitBtn.place(x=50, y=450,anchor= CENTER)
+        earningsBtn.place(x=250, y=125,anchor= CENTER)  
+        generateReportBtn.place(x=250, y=175,anchor= CENTER)
+
+        
   
   
 # Driver Code
