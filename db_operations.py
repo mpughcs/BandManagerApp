@@ -5,7 +5,11 @@ PASSWD="Mintchococh1p!"
 def make_connection():
     mydb = mysql.connector.connect(host="localhost",
     user="root",
+<<<<<<< HEAD
     password=PASSWD,
+=======
+    password="Password",
+>>>>>>> 9eb7c8e (Started Insert Data)
     auth_plugin='mysql_native_password',
     #The first time you run this leave this line commented out, then uncomment it after you create the database
     database="BandManager")
@@ -72,6 +76,7 @@ def create_tables(mycursor):
         date DATE,
         PRIMARY KEY (gig_id),
         FOREIGN KEY (venue_id) REFERENCES venue(venue_id),
+<<<<<<< HEAD
         FOREIGN KEY (top_merch_item_id) REFERENCES merch(merch_id))
     ''') 
 
@@ -155,10 +160,21 @@ def insertGigData():
     try:
         mycursor.execute(sql, (1, 100, 1, "Mary", 100, 10.0, "2023-1-13"))
         mycursor.execute(sql, (2, 300, 3, "Mary", 100, 11.5, "2023-1-19"))
+=======
+        FOREIGN KEY (top_merch_item_id) REFERENCES merch(merch_id),
+        FOREIGN KEY (setList_id) REFERENCES setList(setList_id))
+    ''') 
+
+def insert_data(mycursor):
+    sql = "INSERT INTO venue (location, venue_name) VALUES (%s, %s)"
+    try:
+        mycursor.execute(sql, ("New York", "Madison Square Garden"))
+>>>>>>> 9eb7c8e (Started Insert Data)
         mydb.commit()
     except:
         #rollback if there is an error
         mydb.rollback()
+<<<<<<< HEAD
         print("Error inserting shows")
 
 
@@ -174,6 +190,10 @@ def insertGig(mycursor, venue_id, merch_revenue, top_merch_item_id, booker, tick
         #rollback if there is an error
         mydb.rollback()
         print("Error inserting shows")
+=======
+
+
+>>>>>>> 9eb7c8e (Started Insert Data)
 
 
 
