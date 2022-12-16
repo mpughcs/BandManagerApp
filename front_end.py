@@ -42,7 +42,7 @@ class tkinterApp(tk.Tk):
         # iterating through a tuple consisting
         # of the different page layouts
 
-        for F in (StartPage, Page1, Page2, addShow, addRelease, addMerch):
+        for F in (StartPage, Page1, Page2, addShow, addRelease, addMerch,generateReport):
             frame = F(container, self)
   
             # initializing frame of that object from
@@ -202,7 +202,7 @@ class Page2(tk.Frame):
         exitBtn = ttk.Button(self, text ="Exit",
             command = lambda : exit())
         generateReportBtn = ttk.Button(self, text ="Generate Report",
-                            command = lambda : controller.show_frame(Page2))
+                            command = lambda : controller.show_frame(generateReport))
         
         # putting the button in its place by
         # using grid
@@ -374,7 +374,49 @@ class addMerch(tk.Frame):
 
         exitBtn.place(x=50, y=450,anchor= CENTER)
 
-    
+
+
+
+class generateReport(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        testLabel=Label(self, bg="white",fg="black",text="Generate Report",font=headerFont).place(x=250, y=50, anchor=CENTER)
+        resizeLogo=logoRaw.resize((75,75),Image.Resampling.LANCZOS)
+        logo=ImageTk.PhotoImage(resizeLogo)
+        # show image
+        label = Label(self, image=logo)
+        label.image = logo
+        label.place(x=50, y=50,anchor= CENTER)
+        # button to show frame 2 with text
+        # layout2
+        manageDataBtn = ttk.Button(self, text ="Manage Data",
+                            command = lambda : controller.show_frame(Page1))
+     
+        # button to show frame 3 with text
+        # layout3
+        
+        homeBtn = ttk.Button(self, text ="Home",
+                            command = lambda : controller.show_frame(StartPage))
+        exitBtn = ttk.Button(self, text ="Exit",
+            command = lambda : exit())
+        # create form for adding show
+        yOffset=-35
+        allTablesBtn=Label(self, bg="white",fg="black",text="Merch name",font=smallFont).place(x=250, y=125+yOffset, anchor=CENTER)
+        
+        showTableBtn=Label(self, bg="white",fg="black",text="Cost to make",font=smallFont).place(x=250, y=185+yOffset, anchor=CENTER)
+        
+
+        merchSaleCost=Label(self, bg="white",fg="black",text="Price to consumer",font=smallFont).place(x=250, y=245+yOffset, anchor=CENTER)
+        
+
+        manageDataBtn.place(x=60, y=400,anchor= CENTER)
+
+        homeBtn.place(x=50,y=125,anchor= CENTER)
+
+        exitBtn.place(x=50, y=450,anchor= CENTER)
+
+        
+
 
 def getShowData(e1: Entry ,e2:Entry,e3:Entry,e4:Entry,e5:Entry,e6:Entry,e7:Entry):
     returnStr= e1.get()+","+e2.get()+","+e3.get()+","+e4.get()+","+e5.get()+","+e6.get()+","+e7.get()

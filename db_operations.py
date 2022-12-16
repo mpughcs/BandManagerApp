@@ -177,6 +177,7 @@ def insertGig(mycursor, venue_id, merch_revenue, top_merch_item_id, booker, tick
 
 
 
+
 mydb = make_connection()
 
 mycursor = mydb.cursor()
