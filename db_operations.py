@@ -1,9 +1,11 @@
 import mysql.connector
 
+PASSWD="Mintchococh1p!"
+
 def make_connection():
     mydb = mysql.connector.connect(host="localhost",
     user="root",
-    password="Password",
+    password=PASSWD,
     auth_plugin='mysql_native_password',
     #The first time you run this leave this line commented out, then uncomment it after you create the database
     database="BandManager")
@@ -135,7 +137,7 @@ def insert_data(mycursor):
         print("Error inserting shows")
 
 
-    
+
 
 
 

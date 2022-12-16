@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter.font import Font
+import db_operations as db
 
 
 import tkinter as tk
@@ -23,11 +24,7 @@ class tkinterApp(tk.Tk):
          
         # __init__ function for class Tk
         tk.Tk.__init__(self, *args, **kwargs)
-        # logoRaw=Image.open('bandlogo-02.png')
-        # resizeLogo=logoRaw.resize((100,100),Image.Resampling.LANCZOS)
-        # logo=ImageTk.PhotoImage(resizeLogo)
-        # show image 
-        # creating a container
+        
         tk.Tk.wm_title(self, "Band Manager")
         container = tk.Frame(self) 
         container.pack(side = "top", fill = "both", expand = True)
@@ -56,6 +53,11 @@ class tkinterApp(tk.Tk):
             frame.grid(row = 0, column = 0, sticky ="nsew")
   
         self.show_frame(StartPage)
+        # universal style for all buttons, make them have no background color
+        style = ttk.Style()
+        # style.configure('TButton', bd=25, background='white', foreground='black', font=smallFont)
+        style.configure('TButton', bd=25, background='white', foreground='black', font=smallFont)
+
   
     # to display the current frame passed as
     # parameter
@@ -85,9 +87,7 @@ class StartPage(tk.Frame):
   
         manageDataBtn = ttk.Button(self, text ="Manage Data",
         command = lambda : controller.show_frame(Page1))
-     
-        # putting the button in its place by
-        # using grid
+        
         manageDataBtn.grid(row = 1, column = 1, padx = 10, pady = 10)
         exitBtn = ttk.Button(self, text ="Exit",
             command = lambda : exit())
