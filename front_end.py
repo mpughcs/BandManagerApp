@@ -216,8 +216,10 @@ class Page2(tk.Frame):
 
 class addShow(tk.Frame):
     def __init__(self, parent, controller):
+        yOffset=-15
+
         tk.Frame.__init__(self, parent)
-        testLabel=Label(self, bg="white",fg="black",text="Add Show",font=headerFont).place(x=250, y=50, anchor=CENTER)
+        testLabel=Label(self, bg="white",fg="black",text="Add Show",font=headerFont).place(x=250, y=15, anchor=CENTER)
         resizeLogo=logoRaw.resize((75,75),Image.Resampling.LANCZOS)
         logo=ImageTk.PhotoImage(resizeLogo)
         # show image
@@ -237,14 +239,13 @@ class addShow(tk.Frame):
         exitBtn = ttk.Button(self, text ="Exit",
             command = lambda : exit())
         # create form for adding show
-        yOffset=-35
-        venueIdLabel=Label(self, bg="white",fg="black",text="VenueId",font=smallFont).place(x=250, y=125+yOffset, anchor=CENTER)
+        venueIdLabel=Label(self, bg="white",fg="black",text="VenueId",font=smallFont).place(x=250, y=65+yOffset, anchor=CENTER)
         venueIdEntry=Entry(self, bg="white",fg="black",font=smallFont)
-        venueIdEntry.place(x=250, y=150+yOffset, anchor=CENTER)
+        venueIdEntry.place(x=250, y=90+yOffset, anchor=CENTER)
 
-        dateLabel=Label(self, bg="white",fg="black",text="Date",font=smallFont).place(x=250, y=185+yOffset, anchor=CENTER)
+        dateLabel=Label(self, bg="white",fg="black",text="Date",font=smallFont).place(x=250, y=125+yOffset, anchor=CENTER)
         dateEntry=Entry(self, bg="white",fg="black",font=smallFont)
-        dateEntry.place(x=250, y=210+yOffset, anchor=CENTER)
+        dateEntry.place(x=250, y=150+yOffset, anchor=CENTER)
 
         merchRevenueLabel=Label(self, bg="white",fg="black",text="Merch Revenue",font=smallFont).place(x=250, y=185+yOffset, anchor=CENTER)
         merchRevenueEntry=Entry(self, bg="white",fg="black",font=smallFont)
@@ -268,7 +269,7 @@ class addShow(tk.Frame):
 
         submitBtn = ttk.Button(self, text ="Submit",
                         command = lambda : insertShow(venueIdEntry,dateEntry,merchRevenueEntry,topMerchEntry,bookerEntry,ticketsSoldEntry,ticketPriceEntry))
-        submitBtn.place(x=250, y=500+yOffset,anchor= CENTER)
+        submitBtn.place(x=250, y=470,anchor= CENTER)
 
 
 
@@ -431,6 +432,10 @@ def insertRelease(e1: Entry ,e2:Entry):
     releaseData=getReleaseData(e1,e2)
     # insert into database
     print(releaseData)
+
+    db.insertRelease(db.mycursor,releaseData[0],releaseData[1])
+
+
     e1.delete(0,END)
     e2.delete(0,END)
 

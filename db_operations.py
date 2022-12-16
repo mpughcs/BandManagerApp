@@ -136,7 +136,19 @@ def insert_data(mycursor):
         mydb.rollback()
         print("Error inserting shows")
 
+#   sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, venue_artist_split, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+def insertRelease(mycursor, release_name, release_date):
 
+    sql = "INSERT INTO releases (release_name, release_date) VALUES (%s, %s)"
+    try:
+        mycursor.execute(sql, (release_name, release_date))
+        mydb.commit()
+        mydb.close()
+
+    except:
+        #rollback if there is an error
+        print("Error inserting releases and songs")
+        mydb.rollback()
 
 
 
@@ -147,8 +159,6 @@ mydb = make_connection()
 
 mycursor = mydb.cursor()
 
-create_tables(mycursor)
-insert_data(mycursor)
+# create_tables(mycursor)
+# insert_data(mycursor)
 
-mydb.commit()
-mydb.close()
