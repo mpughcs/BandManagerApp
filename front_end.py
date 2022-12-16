@@ -268,7 +268,7 @@ class addShow(tk.Frame):
         ticketPriceEntry.place(x=250, y=450+yOffset, anchor=CENTER)
 
         submitBtn = ttk.Button(self, text ="Submit",
-                        command = lambda : insertShow(venueIdEntry,dateEntry,merchRevenueEntry,topMerchEntry,bookerEntry,ticketsSoldEntry,ticketPriceEntry))
+                        command = lambda : insertShow(venueIdEntry,merchRevenueEntry,topMerchEntry,bookerEntry,ticketsSoldEntry,ticketPriceEntry,dateEntry))
         submitBtn.place(x=250, y=470,anchor= CENTER)
 
 
@@ -374,27 +374,7 @@ class addMerch(tk.Frame):
 
         exitBtn.place(x=50, y=450,anchor= CENTER)
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 def getShowData(e1: Entry ,e2:Entry,e3:Entry,e4:Entry,e5:Entry,e6:Entry,e7:Entry):
     returnStr= e1.get()+","+e2.get()+","+e3.get()+","+e4.get()+","+e5.get()+","+e6.get()+","+e7.get()
@@ -406,12 +386,8 @@ def insertShow(e1: Entry ,e2:Entry,e3:Entry,e4:Entry,e5:Entry,e6:Entry,e7:Entry)
     # get data from form
     showData=getShowData(e1,e2,e3,e4,e5,e6,e7)
     # insert into database
-
-
-
-
-
-
+    print(showData)
+    db.insertGig(db.mycursor,showData[0],showData[1],showData[2],showData[3],showData[4],showData[5],showData[6])
     e1.delete(0,END)
     e2.delete(0,END)
     e3.delete(0,END)
@@ -432,10 +408,7 @@ def insertRelease(e1: Entry ,e2:Entry):
     releaseData=getReleaseData(e1,e2)
     # insert into database
     print(releaseData)
-
     db.insertRelease(db.mycursor,releaseData[0],releaseData[1])
-
-
     e1.delete(0,END)
     e2.delete(0,END)
 
@@ -447,13 +420,20 @@ def getMerchData(e1:Entry, e2:Entry, e3:Entry):
 def insertMerch(e1:Entry, e2:Entry, e3:Entry):
     merchData=getMerchData(e1,e2,e3)
     print(merchData)
+    db.insertMerch(db.mycursor,merchData[0],merchData[1],merchData[2])
     e1.delete(0,END)
     e2.delete(0,END)
     e3.delete(0,END)
    
 
 
+def exit():
+    print("exiting")
+    db.mydb.close()
+    sys.exit()
 
+
+    
        
 
         

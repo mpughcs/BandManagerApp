@@ -68,7 +68,7 @@ def create_tables(mycursor):
         top_merch_item_id INT, 
         booker VARCHAR(50),
         ticketsSold INT,
-        venue_artist_split DECIMAL,
+        ticket_price DECIMAL,
         date DATE,
         PRIMARY KEY (gig_id),
         FOREIGN KEY (venue_id) REFERENCES venue(venue_id),
@@ -118,32 +118,18 @@ def insert_data(mycursor):
         #rollback if there is an error
         print("Error inserting merch")
         mydb.rollback()
-    try:
-
-        #Inserting into show table
-        sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, venue_artist_split, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        mycursor.execute(sql, (1, 100, 1, "Mary", 100, 0.5, "2023-1-13"))
-        mycursor.execute(sql, (2, 300, 3, "Mary", 100, 0.5, "2023-1-19"))
+    insertGigData()
 
 
-        #Inserting into setList table
-        sql = "INSERT INTO setList (gig_id, song_id) VALUES (%s, %s)"
-        mycursor.execute(sql, (1, 1)) 
-        mycursor.execute(sql, (1, 2)) 
-
-    except:
-        #rollback if there is an error
-        mydb.rollback()
-        print("Error inserting shows")
-
-#   sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, venue_artist_split, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+#   sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, ticket_price, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
 def insertRelease(mycursor, release_name, release_date):
+    mycursor = mydb.cursor()
 
     sql = "INSERT INTO releases (release_name, release_date) VALUES (%s, %s)"
     try:
         mycursor.execute(sql, (release_name, release_date))
         mydb.commit()
-        mydb.close()
+      
 
     except:
         #rollback if there is an error
@@ -151,7 +137,43 @@ def insertRelease(mycursor, release_name, release_date):
         mydb.rollback()
 
 
+def insertMerch(mycursor, item_name, costPer, sale_cost):
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO merch (item_name, costPer, sale_cost) VALUES (%s, %s, %s)"
+    try:
+        mycursor.execute(sql, (item_name, costPer, sale_cost))
+        mydb.commit()
+        
+    except:
+        #rollback if there is an error
+        print("Error inserting merch")
+        mydb.rollback()
 
+def insertGigData():
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, ticket_price, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    try:
+        mycursor.execute(sql, (1, 100, 1, "Mary", 100, 10.0, "2023-1-13"))
+        mycursor.execute(sql, (2, 300, 3, "Mary", 100, 11.5, "2023-1-19"))
+        mydb.commit()
+    except:
+        #rollback if there is an error
+        mydb.rollback()
+        print("Error inserting shows")
+
+
+# sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, ticket_price, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
+def insertGig(mycursor, venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, ticket_price, date):
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO gig (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, ticket_price, date) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    try:
+        mycursor.execute(sql, (venue_id, merch_revenue, top_merch_item_id, booker, ticketsSold, ticket_price, date))
+        mydb.commit()
+    except:
+        #rollback if there is an error
+        mydb.rollback()
+        print("Error inserting shows")
 
 
 
@@ -161,4 +183,7 @@ mycursor = mydb.cursor()
 
 # create_tables(mycursor)
 # insert_data(mycursor)
+# insertGigData()
+
+# mydb.close()
 
