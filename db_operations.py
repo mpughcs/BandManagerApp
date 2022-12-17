@@ -1,4 +1,6 @@
 import mysql.connector
+import csv
+
 
 PASSWD="Mintchococh1p!"
 
@@ -8,13 +10,13 @@ def make_connection():
     password=PASSWD,
     auth_plugin='mysql_native_password',
     #The first time you run this leave this line commented out, then uncomment it after you create the database
-    database="BandManager")
-    #)
+    database="bandmanager")
+    # )
     return mydb
 
 
 def create_database():
-    mycursor.execute("CREATE SCHEMA BandManager;")
+    mycursor.execute("CREATE SCHEMA bandmanager;")
     
 def create_tables(mycursor):
     mycursor.execute('''
@@ -176,11 +178,87 @@ def insertGig(mycursor, venue_id, merch_revenue, top_merch_item_id, booker, tick
         print("Error inserting shows")
 
 
+def insertSetList(mycursor, song_id, gig_id):
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO setlist (song_id, gig_id) VALUES (%s, %s)"
+    try:
+        mycursor.execute(sql, (song_id, gig_id))
+        mydb.commit()
+    except:
+        #rollback if there is an error
+        mydb.rollback()
+        print("Error inserting setlist")
 
+def writeDateToCsv():
+    try:
+        mycursor = mydb.cursor()
+        sql = "SELECT * FROM gig"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        with open('gig.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["id", "venue_id", "merch_revenue", "top_merch_item_id", "booker", "ticketsSold", "ticket_price", "date"])
+            for row in myresult:
+                writer.writerow(row)
+        sql = "SELECT * FROM setlist"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        with open('setlist.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["id", "song_id", "gig_id"])
+            for row in myresult:
+                writer.writerow(row)
+        sql = "SELECT * FROM merch"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        with open('merch.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["id", "item_name", "costPer", "sale_cost"])
+            for row in myresult:
+                writer.writerow(row)
+        sql = "SELECT * FROM releases"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        with open('releases.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["id", "release_name", "release_date"])
+            for row in myresult:
+                writer.writerow(row)
+        sql = "SELECT * FROM song"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        with open('songs.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["id", "song_name", "release_id"])
+            for row in myresult:
+                writer.writerow(row)
+        sql = "SELECT * FROM venue"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        with open('venues.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["id", "venue_name", "city", "state", "country"])
+            for row in myresult:
+                writer.writerow(row)
+    except:
+        print("Error writing to csv")
+
+
+def getSongViewData():
+    try:
+        mycursor = mydb.cursor()
+        sql = "SELECT * from vtimes_song_preformed_with_date"
+        mycursor.execute(sql)
+        myresult = mycursor.fetchall()
+        return myresult
+    except:
+        print("Error getting song view data")
 
 mydb = make_connection()
-
 mycursor = mydb.cursor()
+
+
+# create_database()
 
 # create_tables(mycursor)
 # insert_data(mycursor)

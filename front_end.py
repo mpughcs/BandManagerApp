@@ -16,7 +16,6 @@ PAGE_2_NAME = "Manage Data"
 PAGE_3_NAME = "S 3"
 logoRaw=Image.open('bandlogo-02.png')
 
-
 class tkinterApp(tk.Tk):
      
     # __init__ function for class tkinterApp
@@ -42,7 +41,7 @@ class tkinterApp(tk.Tk):
         # iterating through a tuple consisting
         # of the different page layouts
 
-        for F in (StartPage, Page1, Page2, addShow, addRelease, addMerch,generateReport):
+        for F in (StartPage, Page1, Page2, addShow, addRelease, addMerch,songStatView,addToSetlist):
             frame = F(container, self)
   
             # initializing frame of that object from
@@ -155,6 +154,9 @@ class Page1(tk.Frame):
         addMerchBtn= ttk.Button(self, text ="Add Merch",command = lambda : controller.show_frame(addMerch))
         addMerchBtn.place(x=250, y=225,anchor= CENTER)
 
+        addToSetlistBtn= ttk.Button(self, text ="Add To Setlist",command = lambda : controller.show_frame(addToSetlist))
+        addToSetlistBtn.place(x=250, y=275,anchor= CENTER)
+
         
 
         
@@ -194,15 +196,15 @@ class Page2(tk.Frame):
      
         # button to show frame 3 with text
         # layout3
-        earningsBtn = ttk.Button(self, text ="Earnings",
-                            command = lambda : controller.show_frame(Page2))
+        songStatViewBtn = ttk.Button(self, text ="Song Stats",
+                            command = lambda : controller.show_frame(songStatView))
                             
         homeBtn = ttk.Button(self, text ="Home",
                             command = lambda : controller.show_frame(StartPage))
         exitBtn = ttk.Button(self, text ="Exit",
             command = lambda : exit())
         generateReportBtn = ttk.Button(self, text ="Generate Report",
-                            command = lambda : controller.show_frame(generateReport))
+                            command = lambda : generateReport())
         
         # putting the button in its place by
         # using grid
@@ -211,7 +213,7 @@ class Page2(tk.Frame):
         homeBtn.place(x=50,y=125,anchor= CENTER)
 
         exitBtn.place(x=50, y=450,anchor= CENTER)
-        earningsBtn.place(x=250, y=125,anchor= CENTER)  
+        songStatViewBtn.place(x=250, y=125,anchor= CENTER)  
         generateReportBtn.place(x=250, y=175,anchor= CENTER)
 
 class addShow(tk.Frame):
@@ -375,12 +377,10 @@ class addMerch(tk.Frame):
         exitBtn.place(x=50, y=450,anchor= CENTER)
 
 
-
-
-class generateReport(tk.Frame):
+class addToSetlist(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        testLabel=Label(self, bg="white",fg="black",text="Generate Report",font=headerFont).place(x=250, y=50, anchor=CENTER)
+        testLabel=Label(self, bg="white",fg="black",text="Add to Set List",font=headerFont).place(x=250, y=50, anchor=CENTER)
         resizeLogo=logoRaw.resize((75,75),Image.Resampling.LANCZOS)
         logo=ImageTk.PhotoImage(resizeLogo)
         # show image
@@ -401,13 +401,69 @@ class generateReport(tk.Frame):
             command = lambda : exit())
         # create form for adding show
         yOffset=-35
-        allTablesBtn=Label(self, bg="white",fg="black",text="Merch name",font=smallFont).place(x=250, y=125+yOffset, anchor=CENTER)
+        gigIdLabel=Label(self, bg="white",fg="black",text="Gig ID",font=smallFont).place(x=250, y=125+yOffset, anchor=CENTER)
+        gigIdEntry=Entry(self, bg="white",fg="black",font=smallFont)
+        gigIdEntry.place(x=250, y=150+yOffset, anchor=CENTER)
+
+        songIDLabel=Label(self, bg="white",fg="black",text="Song ID",font=smallFont).place(x=250, y=185+yOffset, anchor=CENTER)
+        songIDEntry=Entry(self, bg="white",fg="black",font=smallFont)
+        songIDEntry.place(x=250, y=210+yOffset, anchor=CENTER)
+
+
+
+        submitBtn = ttk.Button(self, text ="Submit",
+                        command = lambda : insertSetList(gigIdEntry,songIDEntry))
+        submitBtn.place(x=250, y=300+yOffset,anchor= CENTER)
+        manageDataBtn.place(x=60, y=400,anchor= CENTER)
+
+        homeBtn.place(x=50,y=125,anchor= CENTER)
+
+        exitBtn.place(x=50, y=450,anchor= CENTER)
+
+
+
+
+class songStatView(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        testLabel=Label(self, bg="white",fg="black",text="Song Stats",font=headerFont).place(x=250, y=50, anchor=CENTER)
+        resizeLogo=logoRaw.resize((75,75),Image.Resampling.LANCZOS)
+        logo=ImageTk.PhotoImage(resizeLogo)
+        # show image
+        label = Label(self, image=logo)
+        label.image = logo
+        label.place(x=50, y=50,anchor= CENTER)
+        # button to show frame 2 with text
+        # layout2
+        manageDataBtn = ttk.Button(self, text ="Manage Data",
+                            command = lambda : controller.show_frame(Page1))
+     
+        # button to show frame 3 with text
+        # layout3
         
-        showTableBtn=Label(self, bg="white",fg="black",text="Cost to make",font=smallFont).place(x=250, y=185+yOffset, anchor=CENTER)
+        homeBtn = ttk.Button(self, text ="Home",
+                            command = lambda : controller.show_frame(StartPage))
+        exitBtn = ttk.Button(self, text ="Exit",
+            command = lambda : exit())
+
+        yOffset=-10
+        # represent data using a tree view
+        tree = ttk.Treeview(self, columns=("Song Title","Times Performed","Release Date"), show="headings", height="6")
+        tree.column("Song Title", width=200, anchor=CENTER)
+        tree.column("Times Performed", width=100, anchor=CENTER)
+        tree.column("Release Date", width=100, anchor=CENTER)
+        tree.heading("Song Title", text="Song Title")
+        tree.heading("Times Performed", text="Times Performed")
+        tree.heading("Release Date", text="Release Date")
+        tree.place(x=250, y=240+yOffset, anchor=CENTER)
+        addSongViewDataToTree(tree)
+        
         
 
-        merchSaleCost=Label(self, bg="white",fg="black",text="Price to consumer",font=smallFont).place(x=250, y=245+yOffset, anchor=CENTER)
+
+
         
+
 
         manageDataBtn.place(x=60, y=400,anchor= CENTER)
 
@@ -415,7 +471,20 @@ class generateReport(tk.Frame):
 
         exitBtn.place(x=50, y=450,anchor= CENTER)
 
-        
+
+
+       
+# make button for number of times each song has been played since released 
+
+
+# generate report will create a csv file with all the data in it
+def generateReport():
+    try:
+        db.writeDateToCsv()
+    except:
+        print("error")
+
+
 
 
 def getShowData(e1: Entry ,e2:Entry,e3:Entry,e4:Entry,e5:Entry,e6:Entry,e7:Entry):
@@ -438,6 +507,19 @@ def insertShow(e1: Entry ,e2:Entry,e3:Entry,e4:Entry,e5:Entry,e6:Entry,e7:Entry)
     e6.delete(0,END)
     e7.delete(0,END)
 
+def getSetListData(e1: Entry, e2: Entry):
+    returnStr= e1.get()+","+e2.get()
+    returnArr=returnStr.split(",")
+    # print(returnArr)
+    return returnArr
+def insertSetList(e1: Entry, e2: Entry):
+    # get data from form
+    setListData=getSetListData(e1,e2)
+    # insert into database
+    print(setListData)
+    db.insertSetList(db.mycursor,setListData[1],setListData[0])
+    e1.delete(0,END)
+    e2.delete(0,END)
 
 def getReleaseData(e1: Entry ,e2:Entry):
     returnStr= e1.get()+","+e2.get()
@@ -479,6 +561,12 @@ def exit():
        
 
         
+def addSongViewDataToTree(tree):
+    # get data from database
+    songData=db.getSongViewData()
+    # add data to tree
+    for row in songData:
+        tree.insert("", "end", values=row)
 
   
 # Driver Code
